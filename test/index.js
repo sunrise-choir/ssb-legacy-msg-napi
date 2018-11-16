@@ -1,5 +1,5 @@
 var test = require('tape')
-var {parseJson, toJson, toCbor, parseCbor} = require('../')
+var {parseJson, toJson, toCbor, parseCbor, parseJsonWithConstructor, parseCborWithConstructor} = require('../')
 
 var testMessage = require('./simple.json')
 var testString = JSON.stringify(testMessage)
@@ -10,6 +10,11 @@ test('parses ok', function (t) {
   t.end()
 })
 
+test('parses with constructor ok', function (t) {
+  var actual = parseJsonWithConstructor(testString)
+  t.deepEqual(actual, testMessage)
+  t.end()
+})
 test.skip('parses weird failing thing ok', function (t) {
   var testMessage = require('./weird-failure.json')
   var testString = JSON.stringify(testMessage)
@@ -28,6 +33,9 @@ test('encode / decode cbor', function(t) {
   var encodedMessage = toCbor(testMessage) 
   var parsedMessage = parseCbor(encodedMessage)
 
+  t.deepEqual(parsedMessage, testMessage)
+
+  parsedMessage = parseCborWithConstructor(encodedMessage)
   t.deepEqual(parsedMessage, testMessage)
   t.end()
 })
