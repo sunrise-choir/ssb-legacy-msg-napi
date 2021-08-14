@@ -67,4 +67,4 @@ Cross compiling is still a work in progress. Still todo:
 
 ## License
 
-AGPL3
+LGPL-3.0
